@@ -17,16 +17,14 @@ import ${packageName}.BuildConfig;
 
 /**
  * ================================================
- * 组件的全局配置信息在此配置, 需要将此实现类声明到 AndroidManifest 中
- * CommonSDK 中已有 GlobalConfiguration 配置有所有组件都可公用的配置信息
- * 这里用来配置一些组件自身私有的配置信息
+ * Set Component global config here, and need add this class to AndroidManifest
+ * AppCommonSDK has already set some config in GlobalConfiguration
+ * This config just add some private config of itself.
  *
  * @see com.jess.arms.base.delegate.AppDelegate
  * @see com.jess.arms.integration.ManifestParser
  * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki#3.3">ConfigModule wiki 官方文档</a>
  * Created by ArmsComponentTemplate
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public final class GlobalConfiguration implements ConfigModule {
@@ -38,8 +36,9 @@ public final class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles) {
-        // AppLifecycles 的所有方法都会在基类 Application 的对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
-        // 可以根据不同的逻辑添加多个实现类
+        // All methods of AppLifecycles are called during the corresponding life cycle of the base class Application, 
+        // so you can extend some of the logic you need in the corresponding methods
+        // You can add multiple implementation classes based on different logic 
         lifecycles.add(new AppLifecyclesImpl());
     }
 
@@ -50,7 +49,7 @@ public final class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
-        //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码, 所以不需要再执行
+        //when moudule integrate to the App, the App has already perform the code
         if (BuildConfig.IS_BUILD_MODULE) {
             lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
                 @Override

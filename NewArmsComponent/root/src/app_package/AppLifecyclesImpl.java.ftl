@@ -13,11 +13,9 @@ import ${packageName}.BuildConfig;
 
 /**
  * ================================================
- * 展示 {@link AppLifecycles} 的用法
+ * show {@link AppLifecycles} 's usages
  * <p>
  * Created by ArmsComponentTemplate
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class AppLifecyclesImpl implements AppLifecycles {
@@ -34,9 +32,9 @@ public class AppLifecyclesImpl implements AppLifecycles {
             // You should not init your app in this process.
             return;
         }
-        //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码
+        //when moudule integrate to the App, the App has already perform the code 
         if (BuildConfig.IS_BUILD_MODULE) {
-            //leakCanary内存泄露检查
+            //set leakCanary
             ArmsUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
         }
     }

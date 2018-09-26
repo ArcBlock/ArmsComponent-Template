@@ -9,6 +9,7 @@ apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     <#if compareVersionsIgnoringQualifiers(gradlePluginVersion, '3.0.0') lt 0>buildToolsVersion rootProject.ext.android["buildToolsVersion"]</#if>
     useLibrary 'org.apache.http.legacy'
 
@@ -51,7 +52,7 @@ android {
         }
     }
 
-//    resourcePrefix "ModuleName_" //给 Module 内的资源名增加前缀, 避免资源名冲突, 建议使用 Module 名作为前缀
+//    resourcePrefix "ModuleName_" //add this for module to avoid resource name conflict
 
     lintOptions {
         disable 'InvalidPackage'
@@ -73,9 +74,9 @@ android {
 
 dependencies {
     ${getConfigurationName("compile")} fileTree(dir: 'libs', include: ['*.jar'])
-    //因为 CommonRes 依赖了 CommonSDK, 所以如果业务模块需要公共 UI 组件就依赖 CommonRes, 如果不需要就只依赖 CommonSDK
-    api project(":CommonRes")
-    api project(":CommonService")
+    //Because AppCommonRes already depend AppCommonSDK, So don't need implementation again
+    api project(":AppCommonRes")
+    api project(":AppCommonService")
     if (isBuildModule.toBoolean()) {
         //view
         annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
